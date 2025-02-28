@@ -1,5 +1,5 @@
 const express = require('express');
-const { getSuperAdmins } = require('../controllers/superAdminController');
+const { getSuperAdmins } = require('../Controller/superAdminController');  // Import controller
 
 const router = express.Router();
 
