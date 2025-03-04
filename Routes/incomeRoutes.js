@@ -1,10 +1,12 @@
-const express = require('express');
-const { getIncomes, createIncome, deleteIncome } = require('../Controller/incomeController');
-const router = express.Router();
+// import express from 'express';
+// import { getIncomes, createIncome, deleteIncome } from '../Controller/incomeController.js';
 
-// Routes for income management
-router.get('/', getIncomes);        // Access all incomes at /incomes
-router.post('/', createIncome);     // Create a new income at /incomes
-router.delete('/:id', deleteIncome); // Delete income by ID at /incomes/:id
+// const router = express.Router();
 
-module.exports = router;
+
+// // Routes for income management
+// router.get('/', getIncomes);        // Access all incomes at /incomes
+// router.post('/', createIncome);     // Create a new income at /incomes
+// router.delete('/:id', deleteIncome); // Delete income by ID at /incomes/:id
+
+// export default router;

@@ -1,9 +1,9 @@
-const express = require('express');
-const { getSuperAdmins } = require('../Controller/superAdminController');  // Import controller
+import express from 'express';
+import { getSuperAdmins } from '../Controller/superAdminController.js';
 
 const router = express.Router();
 
 // Define the route for SuperAdmins
 router.get('/', getSuperAdmins);
 
-module.exports = router;
+export default router;
