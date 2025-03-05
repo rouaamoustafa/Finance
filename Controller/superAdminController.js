@@ -1,8 +1,9 @@
-const { createClient } = require('@supabase/supabase-js');
-require('dotenv').config();  // Load environment variables
+import supabase from '../config/supabaseClient.js';
+import dotenv from 'dotenv';
+dotenv.config();  
 
 // Initialize Supabase client here
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
+//const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
 // Controller to get all SuperAdmins
 const getSuperAdmins = async (req, res) => {
@@ -15,4 +16,4 @@ const getSuperAdmins = async (req, res) => {
     }
 };
 
-module.exports = { getSuperAdmins };
+export  { getSuperAdmins };
