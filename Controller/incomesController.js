@@ -1,4 +1,4 @@
-// Controller/incomesController.js
+
 import supabase from '../config/supabaseClient.js';
 
 export const getIncomes = async (req, res) => {
@@ -81,7 +81,8 @@ export const updateIncome = async (req, res) => {
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
-  }; 
+}; 
+
 export const deleteIncome = async (req, res) => {
     try {
       const { id } = req.params;
@@ -116,7 +117,7 @@ export const deleteIncome = async (req, res) => {
     } catch (err) {
       res.status(500).json({ error: err.message });
     }
-  };
+};
   
   
 
