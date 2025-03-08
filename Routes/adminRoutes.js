@@ -1,22 +1,26 @@
-// Routes/adminRoutes.js
 import express from 'express';
 import {
-  createAdmin, getAdmins, getAdminsByRole, deleteAdmin, loginAdmin
+  createAdmin,
+  getAdmins,
+  getAdminsByRole,
+  deleteAdmin,
+  loginAdmin,
+  updateAdmin
 } from '../Controller/adminController.js';
+
+import { authMiddleware, authorizeRole } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// 1. Login (public)
+// ✅ Public Routes (No authentication needed)
 router.post('/login', loginAdmin);
 
-// 2. Create an admin (public or protected? your choice)
-router.post('/', createAdmin);
+// ✅ Protected Routes (Require Authentication)
+router.post('/', authMiddleware, authorizeRole(['superadmin','subadmin']), createAdmin); // Only superadmin can create admins
+router.get('/', authMiddleware, getAdmins);
+router.get('/role', authMiddleware, getAdminsByRole);
+router.delete('/:id', authMiddleware, authorizeRole(['superadmin','subadmin']), deleteAdmin); // Only superadmin can delete
+router.put("/:id", authMiddleware, authorizeRole(["superadmin", "subadmin"]), updateAdmin);
 
-// 3. GET all admins
-router.get('/', getAdmins);
-router.get('/admin-only', getAdminsByRole);
-
-// 4. Delete admin
-router.delete('/:id', deleteAdmin);
 
 export default router;

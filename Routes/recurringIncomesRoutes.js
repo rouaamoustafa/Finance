@@ -1,13 +1,12 @@
 import express from 'express';
-import { getRecurringExpenses, createRecurringExpense ,updateRecurringExpense,deleteRecurringExpense} from '../Controller/recurringExpensesController.js';
+import { getRecurringIncomes, createRecurringIncome, updateRecurringIncome, deleteRecurringIncome } from '../Controller/recurringIncomesController.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.get('/recurring_expenses', authMiddleware, getRecurringExpenses);
-router.post('/recurring_expenses', authMiddleware, createRecurringExpense);
-router.put('/recurring_expenses/:id', authMiddleware, updateRecurringExpense);
-router.delete('/recurring_expenses/:id', authMiddleware, deleteRecurringExpense);
-
+router.get('/', authMiddleware, getRecurringIncomes);
+router.post('/', authMiddleware, createRecurringIncome);
+router.put('/:id', authMiddleware, updateRecurringIncome);
+router.delete('/:id', authMiddleware, deleteRecurringIncome);
 
 export default router;

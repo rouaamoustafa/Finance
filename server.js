@@ -10,6 +10,7 @@ import expensesRoutes from './Routes/expensesRoutes.js';
 import recurringExpensesRoutes from './Routes/recurringExpensesRoutes.js';
 import recurringIncomesRoutes from './Routes/recurringIncomesRoutes.js';
 import profitGoalRoutes from './Routes/profitGoalRoutes.js';
+import reportsRoutes from './Routes/reportsRoutes.js';
 
 dotenv.config();
 
@@ -19,20 +20,29 @@ const port = process.env.PORT || 5001;
 app.use(express.json());
 app.use(cors());
 
-// Public: admin login, create admin, etc.
+// 🔹 Enforce HTTPS in production
+app.use((req, res, next) => {
+  if (req.headers['x-forwarded-proto'] !== 'https' && process.env.NODE_ENV === 'production') {
+    return res.redirect(`https://${req.headers.host}${req.url}`);
+  }
+  next();
+});
+
+// ✅ Public routes (No auth required)
 app.use('/admins', adminRoutes);
 
-// Protected: incomes routes require a valid JWT
+// ✅ Protected routes (Require JWT auth)
 app.use('/incomes', authMiddleware, incomesRoutes);
-app.use('/api', expensesRoutes);
-app.use('/api', recurringExpensesRoutes);
-app.use('/api', recurringIncomesRoutes);
-app.use('/api', profitGoalRoutes);
+app.use('/expenses', authMiddleware, expensesRoutes);
+app.use('/recurring_expenses', authMiddleware, recurringExpensesRoutes);
+app.use('/recurring_incomes', authMiddleware, recurringIncomesRoutes);
+app.use('/profit_goals', authMiddleware, profitGoalRoutes);
+app.use('/reports', authMiddleware, reportsRoutes);
+
+
 app.get('/', (req, res) => {
   res.send('Backend is running with JWT auth!');
 });
-
-
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

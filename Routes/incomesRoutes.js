@@ -1,4 +1,3 @@
-// Routes/incomesRoutes.js
 import express from 'express';
 import {
   getIncomes,
@@ -6,19 +5,20 @@ import {
   updateIncome,
   deleteIncome
 } from '../Controller/incomesController.js';
+import { authMiddleware, authorizeRole } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-// GET all incomes (both admin & subadmin)
-router.get('/', getIncomes);
+// GET all incomes (admin & subadmin can access)
+router.get('/', authMiddleware, getIncomes);
 
 // POST new income (only subadmin)
-router.post('/', createIncome);
+router.post('/', authMiddleware,createIncome);
 
-// PUT (edit) an income (only subadmin)
-router.put('/:id', updateIncome);
+// PUT (edit income) (only subadmin)
+router.put('/:id', authMiddleware, updateIncome);
 
-// DELETE an income (role-based checks in the controller)
-router.delete('/:id', deleteIncome);
+// DELETE an income (only admin)
+router.delete('/:id', authMiddleware, deleteIncome);
 
 export default router;
